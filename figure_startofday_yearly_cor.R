@@ -5,11 +5,8 @@ source('loaddata.R')
 data = loaddata(datadir);
 # smooth
 data$obs = preprocess(obs_d) 
+source("calc_annual.R")
+data_year = calc_annual(data)
 ###################
-source('assist_figure_daily.R')
-percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
-plt_flume_daily(data, "f001", percname)
-#plt_flume_daily(data, "f002", percname)
+source('assist_figure_startofday_yearly_cor.R')
 
-################### zero in monsoon / non-monsoon
-plt_monsoon_zero(data, "f001", percname[1])

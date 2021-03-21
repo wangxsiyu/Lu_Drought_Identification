@@ -1,9 +1,12 @@
-calc_residue <- function(){
+calc_residue <- function(data){
+  #re = list()
   # compute residual
-  result$res_ndvi = get_residual(data$ndvi)
-  result$res_evi = get_residual(data$evi)
-  result$res_lai = get_residual(data$lai)
+  data$res_ndvi = get_residual(data$ndvi)
+  data$res_evi = get_residual(data$evi)
+  data$res_lai = get_residual(data$lai)
+  return(data)
 }
+
 get_dayid <- function(M,D, option29 = 0){
   y = matrix(NaN, length(D),1)
   ms = c(31,28 + option29,31,30,31,30,31,31,30,31,30)
@@ -14,6 +17,7 @@ get_dayid <- function(M,D, option29 = 0){
   y = y[,1]
   return(y)
 }
+
 get_residual <- function(x){
   doy = get_dayid(x$month,x$day)
   ymd = c('year','month','day')
@@ -27,6 +31,7 @@ get_residual <- function(x){
   colnames(re) = colnames(x)
   return(re)
 }
+
 calc_annualaverage <- function(doy,td){
   per_mean = NULL
   day365 = max(365, max(doy))

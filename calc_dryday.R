@@ -1,19 +1,6 @@
-calc_annual <- function(data){
-  result = list()
-  # compute annual (perc/neg)
-  data_name = names(data)
-  annual = list()
-  for( di in 1:length(data_name) ){
-    td = data[[data_name[di]]]
-    annual[[data_name[di]]] = get_year(td)
-  }
-
-  result$annual = annual
-  return(result)
-}
-
 calc_dryday <- function(data){
-  annual = calc_annual(data)$annual
+  data_year = calc_annual(data)
+  annual = data_year$annual
   ## dryday x perc x 8
   for (t in 0:1){
     for (c in 0:1){
@@ -58,6 +45,3 @@ get_year_dry <- function(td){
   dry_y[,1] = years
   return(dry_y)
 }
-
-
-

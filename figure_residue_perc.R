@@ -5,11 +5,14 @@ source('loaddata.R')
 data = loaddata(datadir);
 # smooth
 data$obs = preprocess(obs_d) 
+# calculate residue
+source("calc_residue.R")
+data_residue = calc_residue(data)
 ###################
-source('assist_figure_daily.R')
-percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
-plt_flume_daily(data, "f001", percname)
-#plt_flume_daily(data, "f002", percname)
+source('assist_figure_residue.R')
+flname = "f001"
+# boxplot
+plt_residue_box(data_residue, flname)
 
-################### zero in monsoon / non-monsoon
-plt_monsoon_zero(data, "f001", percname[1])
+# res>0 percentage of perc bin
+plt_residue_perc(data_residue, flname)

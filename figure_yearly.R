@@ -5,11 +5,15 @@ source('loaddata.R')
 data = loaddata(datadir);
 # smooth
 data$obs = preprocess(obs_d) 
+# calculate annual data includes dry days
+source("calc_annual.R")
+data_year = calc_dryday(data)
 ###################
 source('assist_figure_daily.R')
+## 3.1 perc / veg
 percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
-plt_flume_daily(data, "f001", percname)
-#plt_flume_daily(data, "f002", percname)
+plt_flume_daily(data_year,"f001",percname)
 
-################### zero in monsoon / non-monsoon
-plt_monsoon_zero(data, "f001", percname[1])
+# ## 3.2 dry days / veg
+drydayname = c("dryday_t1c0f1","dryday_t0c0f0","dryday_t1c1f1")
+plt_flume_daily(data_year,"f001",drydayname)

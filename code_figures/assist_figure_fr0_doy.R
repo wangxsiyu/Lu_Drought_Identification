@@ -5,7 +5,7 @@ get_doy_fr_0 <- function(td){
   fr_0 = matrix(NA,day365,length(ndata))
   for( fli in 1:length(ndata) ){
     for( dayi in 1:day365){
-      id = which(doy == dayi)
+      id = which(doy == dayi & !is.na(td[,ndata[fli]]))
       fr_0[dayi,fli] = length(which(td[id,ndata[fli]] == 0)) / length(id)
     }
   }

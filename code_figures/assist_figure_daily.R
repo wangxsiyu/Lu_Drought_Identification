@@ -37,7 +37,41 @@ plt_idx_daily <- function(data,idx,flname, percname, vegname, flname_veg = NULL)
   plt_trendline(tperc, tveg)
 }
 
-plt_monsoon_zero <- function(data, flname, percname, flname_veg = NULL){
+
+plt_monsoon_zero <- function(data, flname, vegname, flname_veg = NULL){
+  if (is.null(flname_veg)){
+    flname_veg = flname
+  }
+  idx_n = list()
+  idx_n$idx = 1:length(data$obs[,flname])
+  #non-zero flow 
+  idx_n$idx_non0 = which(data$obs[, flname] > 0)
+  #zero flow in non-monsoon
+  idx_n$idx_0_nonmons = which(data$obs[, flname] == 0 & (data$obs[,"month"] <6 | data$obs[,"month"] >9))
+  
+  par(mfrow = c(3,3))
+  par(oma = c(1,2,1,1), mar = c(2,2,1,1))
+  percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
+  monsoon_name = c("ALL","Non-zero runoffs","Zero flow in non-monsoon")
+  for( idxi in 1:length(idx_n) ){
+    for( j in 1:length(percname) ){
+      plt_idx_daily(data,idx_n[[idxi]],flname,percname[j],vegname,flname_veg)
+      if( idxi == 1 ){
+        mtext(side = 3, line = 0.8, text = toupper(percname[j]), cex = 0.8)
+      }
+      if( j == 1 ){
+        mtext(side = 2, line = 2.8, text = monsoon_name[idxi])
+      }
+      if( idxi == length(idx_n) & j == 2 ){
+        mtext(side = 1, line = 2.2, text = "Percentile")
+      }
+    }
+  }
+  
+}
+
+
+plt_monsoon_zero_old <- function(data, flname, percname, flname_veg = NULL){
   if (is.null(flname_veg)){
     flname_veg = flname
   }
@@ -46,9 +80,9 @@ plt_monsoon_zero <- function(data, flname, percname, flname_veg = NULL){
   #zero flow
   idx_n$idx_00 = which(data$obs[,flname] == 0) 
   #zero flow in monsoon
-  idx_n$idx_mons0 = idx_00[which(data$obs[idx_00,"month"] >=6 & data$obs[idx_00,"month"] <=9)]
+  idx_n$idx_mons0 = idx_n$idx_00[which(data$obs[idx_n$idx_00,"month"] >=6 & data$obs[idx_n$idx_00,"month"] <=9)]
   #zero flow in non-monsoon
-  idx_n$idx_nomons0 = idx_00[which(data$obs[idx_00,"month"] <6 | data$obs[idx_00,"month"] >9)]
+  idx_n$idx_nomons0 = idx_n$idx_00[which(data$obs[idx_n$idx_00,"month"] <6 | data$obs[idx_n$idx_00,"month"] >9)]
   
   par(mfrow = c(4,3))
   par(oma = c(1,2,1,1), mar = c(2,2,1,1))

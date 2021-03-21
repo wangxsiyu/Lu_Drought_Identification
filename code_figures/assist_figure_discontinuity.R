@@ -4,8 +4,6 @@ plt_discontinuty <- function(idx,data,flname){
   col_t0c0f0 = rgb(1,0.1,0,0.7) 
   col_t1c1f1 = rgb(0,1,0,0.7)
   
-  par(mfrow = c(1,1))
-  par(oma = c(2,2,1,1), mar = c(1,1,1,1))
   percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
   colorname = c(col_t1c0f1,col_t0c0f0,col_t1c1f1)
   for (i in 1:length(percname)){

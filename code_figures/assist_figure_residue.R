@@ -1,4 +1,48 @@
 
+
+plt_residue_vio <- function(data_residue, flname){
+ # par(mfrow = c(3,3))
+ # par(oma = c(1,2,1,1), mar = c(2,2,1,1))
+  library(ggpubr)
+  
+  col_t1c0f1 = rgb(0,0,1,0.7)   
+  col_t0c0f0 = rgb(1,0.1,0,0.7)  
+  col_t1c1f1 = rgb(0,1,0,0.7)
+  colorname = c(col_t1c0f1,col_t0c0f0,col_t1c1f1)
+  library(effsize)
+  percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
+  vegname = c("ndvi","evi","lai")
+  resname = paste("res",vegname, sep = "_")
+  stat = list(ttest_p = matrix(NA, 3,3), cohen_d = matrix(NA, 3,3))
+  pp = matrix(list(), 3,3)
+  for (j in 1:length(percname)){
+    for (i in 1:length(resname)){
+      idx_b = which(data_residue[[resname[i]]][,flname]>0)
+      idx_s = which(data_residue[[resname[i]]][,flname]<0)
+      tperc_b = data_residue[[percname[j]]][idx_b,flname]
+      tperc_s = data_residue[[percname[j]]][idx_s,flname]
+      stat$ttest_p[j, i]= t.test(tperc_b, tperc_s)$p.value
+      stat$cohen_d[j, i]= cohen.d(tperc_b, tperc_s)$estimate
+      pp[[i,j]] = plt_violin(tperc_b,tperc_s,colorname[j])
+      # if( j == 1 ){
+      #   mtext(side = 3, line = 0.5, text = toupper(vegname[i]) )
+      # }
+      # if( j == 3 ){
+      #   mtext(side = 1, line = 1, at = c(0.5,1.5), text = c("res>0","res<0"))
+      # }
+      # if( i == 1 ){
+      #   mtext(side = 2, line = 2.2, text = percname[j])
+      # }
+    }
+  }
+  library(gridExtra)
+  grid.arrange(pp[[1,1]], pp[[1,2]],pp[[1,3]],pp[[2,1]],pp[[2,2]],pp[[2,3]],
+               pp[[3,1]],pp[[3,2]],pp[[3,3]],
+               ncol = 3, nrow = 3)
+  return(stat)
+}
+
+
 plt_residue_box <- function(data_residue, flname){
   par(mfrow = c(3,3))
   par(oma = c(1,2,1,1), mar = c(2,2,1,1))
@@ -6,16 +50,19 @@ plt_residue_box <- function(data_residue, flname){
   col_t0c0f0 = rgb(1,0.1,0,0.7)  
   col_t1c1f1 = rgb(0,1,0,0.7)
   colorname = c(col_t1c0f1,col_t0c0f0,col_t1c1f1)
-  
+  library(effsize)
   percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
   vegname = c("ndvi","evi","lai")
   resname = paste("res",vegname, sep = "_")
+  stat = list(ttest_p = matrix(NA, 3,3), cohen_d = matrix(NA, 3,3))
   for (j in 1:length(percname)){
     for (i in 1:length(resname)){
       idx_b = which(data_residue[[resname[i]]][,flname]>0)
       idx_s = which(data_residue[[resname[i]]][,flname]<0)
       tperc_b = data_residue[[percname[j]]][idx_b,flname]
       tperc_s = data_residue[[percname[j]]][idx_s,flname]
+      stat$ttest_p[j, i]= t.test(tperc_b, tperc_s)$p.value
+      stat$cohen_d[j, i]= cohen.d(tperc_b, tperc_s)$estimate
       plt_box(tperc_b,tperc_s,colorname[j])
       if( j == 1 ){
         mtext(side = 3, line = 0.5, text = toupper(vegname[i]) )
@@ -28,6 +75,7 @@ plt_residue_box <- function(data_residue, flname){
       }
     }
   }
+  return(stat)
 }
 
 
@@ -39,6 +87,30 @@ plt_box <- function(perc_big,perc_small,col_t0c0){
   box()
 }
 
+plt_violin <- function(perc_big,perc_small,col_t0c0){
+  
+  library(ggplot2)
+  
+  # create a dataset
+  data <- data.frame(
+    name=c( rep('res +',length(perc_big)), rep('res -', length(perc_small))  ),
+    value=c( perc_big, perc_small )
+  )
+  # Most basic violin chart
+  p <- ggplot(data, aes(x=name, y=value, fill=name)) + # fill=name allow to automatically dedicate a color for each group
+    geom_violin()
+  return(p)
+}
+
+plt_dist <- function(perc_big,perc_small,col_t0c0){
+  plot(density(perc_big),xlim = c(0,1) ,col = col_t0c0, axes = F)
+  par(new = T)
+  plot(density(perc_small),xlim = c(0,1), col = col_t0c0, axes = F)
+  par(new = F)
+  #axis(side = 1, at = c(0.5,1.5), labels = F, tck = -0.02)
+  #axis(side = 2, las = 1)
+  box()
+}
 
 plt_residue_perc <- function(data_residue, flname){
   par(mfrow = c(1,3))

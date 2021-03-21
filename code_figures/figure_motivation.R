@@ -3,8 +3,6 @@ funcdir = "/Users/Mengtian/Mengtian_Project/drought_identification/Lu_Drought_Id
 setwd(funcdir)
 source('loaddata.R')
 data = loaddata(datadir);
-# smooth
-data$obs = preprocess(obs_d) 
 # annual data
 source('calc_annual.R')
 data_year = calc_annual(data)

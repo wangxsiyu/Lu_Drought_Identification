@@ -1,6 +1,19 @@
+calc_annual <- function(data){
+  result = list()
+  # compute annual (perc/neg)
+  data_name = names(data)
+  annual = list()
+  for( di in 1:length(data_name) ){
+    td = data[[data_name[di]]]
+    annual[[data_name[di]]] = get_year(td)
+  }
+
+  result$annual = annual
+  return(result)
+}
+
 calc_dryday <- function(data){
-  data_year = calc_annual(data)
-  annual = data_year$annual
+  annual = calc_annual(data)$annual
   ## dryday x perc x 8
   for (t in 0:1){
     for (c in 0:1){
@@ -14,7 +27,18 @@ calc_dryday <- function(data){
   return(annual)
 }
 
-
+get_year <- function(td){
+  years = unique(td$year)
+  out = matrix(NA,length(years),ncol(td))
+  for( yi in 1:length(years)){
+    id = which(td$year == years[yi])
+    out[yi,] = colMeans(td[id,],na.rm = T)
+  }
+  colnames(out) = colnames(td)
+  data_col = setdiff(colnames(out),c("month","day"))
+  out = out[,data_col]
+  return(out)
+}
 
 get_year_dry <- function(td){
   years = unique(td[,"year"])
@@ -34,3 +58,6 @@ get_year_dry <- function(td){
   dry_y[,1] = years
   return(dry_y)
 }
+
+
+

@@ -1,22 +1,27 @@
-datadir = "/Users/Mengtian/Mengtian_Project/drought_identification/data"
-funcdir = "/Users/Mengtian/Mengtian_Project/drought_identification/Lu_Drought_Identification"
+library(rstudioapi)
+funcdir = dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(funcdir)
+datadir = "../../data"
 source('loaddata.R')
-data = loaddata(datadir);
-# smooth
-data$obs = preprocess(obs_d) 
+#data = loaddata(datadir)
+data = loaddata_h8v5(datadir)
+source('calc_annual.R')
+data_year = calc_annual(data)
+annual = data_year$annual
 ###################
 source('assist_figure_discontinuity.R')
-flname = "f001"
-idx = data$obs$year>=1958 & data$obs$year<=2017
-par(mfrow = c(1,1))
-par(oma = c(2,2,1,1), mar = c(1,1,1,1))
-plt_discontinuty(idx, data, flname)
 
-years = c(2001:2002,2004:2010)
-par(mfrow = c(2,5))
-for ( i in 1: length(years) ){
-  idx = data$obs$year == years[i]
-  plt_discontinuty(idx, data, flname)
-  mtext(side = 3, line = 0.5, text = years[i])
-}
+#years = c(2005,2008,2009)
+years = c(2008,2010,2014)
+###### 1. several specific years
+flname = "f001"
+plt_3year(years, data, annual, flname, 1956)
+
+flname = "x9472050"
+plt_3year(years, data, annual, flname, 1995)
+
+###### 2. average of dry,wet,normal years
+plt_drynorwet_3year(data_year, flname)
+
+
+

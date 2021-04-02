@@ -5,7 +5,7 @@ datadir = "../../data"
 source('loaddata.R')
 data = loaddata(datadir);
 source('calc_daily_percmean.R')
-result = calc_cor_percmean(data)
+result = calc_cor_percmean(data,flname)
 ###################
 source('assist_figure_daily.R')
 percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")

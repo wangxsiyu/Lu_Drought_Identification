@@ -13,10 +13,13 @@ get_doy_fr_0 <- function(td){
   return(fr_0)
 }
 
-plt_doy_fr_0 <- function(fr_0,flname){
-  par(mfrow = c(1,1))
-  plot(fr_0[,flname], type = "l", xlab ="", ylab = "", axes = F)
+plt_doy_fr_0 <- function(data,flname){
+  td = data$obs
+  fr_0 = get_doy_fr_0(td)
+  
+  plot(fr_0[,flname], type = "l", xlab ="", ylab = "", axes = F, col = "grey")
   axis(side = 1)
-  axis(side = 2, las = 1)
+  #axis(side = 4, las = 1)
   box()
 }
+

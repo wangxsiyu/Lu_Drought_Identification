@@ -11,7 +11,7 @@ source('assist_figure_startofday_yearly_cor.R')
 #save(data_year_lag, file = paste(datadir,"pieter_data_year_lag.R",sep = "/"))
 load(file = paste(datadir,"data_year_lag.R",sep = "/"))
 
-flname = "x9471000" #"f001"
+flname = "f001" #"x9471000" #
 ## veg vs perc
 percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
 plt_veg_lag_cor(data_year_lag$annual_lag,flname,percname)

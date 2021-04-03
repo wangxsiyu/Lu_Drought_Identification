@@ -71,8 +71,8 @@ get_veg_perc_lag_cor <- function(data_lag,flname,percname){
   for (i in 1:length(vegname)){
     for (j in 1:length(percname)){
       for( lagi in 1:365 ){
-        tveg = data_lag[[lagi]][[vegname[i]]][,flname]
-        tperc = data_lag[[lagi]][[percname[j]]][,flname]
+        tveg = data_lag[[lagi]][[vegname[i]]][89:109,flname]  #siyu
+        tperc = data_lag[[lagi]][[percname[j]]][89:109,flname]  #siyu
         veg_perc_cor[lagi] = cor(tveg,tperc,use = "pairwise")
       }
       veg_perc_cor_lag[[i,j]] = veg_perc_cor

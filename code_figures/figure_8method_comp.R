@@ -6,6 +6,7 @@ source('loaddata.R')
 data = loaddata_h8v5(datadir);
 source('calc_annual.R')
 data_an = calc_annual(data)$annual
+data_seasonal = calc_seasonal(data)$seasonal
 #source("calc_residue.R")
 #data_residue = calc_residue(data)
 ###################
@@ -21,6 +22,13 @@ plt_8method_1fl_comp(data,data_an,flname,percname)
 flname_all = c("x9472050","f001","f002","f006","f015","f009","x9470700","f010","f007")
 plt_8method_multifl_comp(data,flname_all,percname,"Daily")
 plt_8method_multifl_comp(data_an,flname_all,percname,"Yearly")
+
+# period = "premons"
+# veg_monsname = paste(c("ndvi","evi","lai"),"_",period, sep = "")
+# percname = names(data_seasonal)[str_detect(names(data_seasonal),"perc")]
+# perc_monsname = percname[str_detect(percname,paste("_",period,sep = ""))]
+# plt_8method_multifl_comp(data_seasonal,flname_all,veg_monsname,perc_monsname,"Premonsoon")
+ 
 
 ## 1.2 has baseflow
 flname_all = c("x9471380","x9470800","x9470750","x9471310",

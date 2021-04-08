@@ -1,8 +1,9 @@
+{
 library(rstudioapi)
 funcdir = dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(funcdir)
 ##################################
-d = read.csv("../data/runoff/runoff.csv")
+d = read.csv("../../data/runoff/runoff.csv")
 doy = get_dayid(d$month, d$day)
 param = list()
 param$cdpm_option = 'linear'
@@ -63,10 +64,10 @@ perc2 = get_ecdf(t2, sf)
   axis(side = 2, las = 1)
   box()
   
-  legend(100,0.2, legend = c("Quantile","Percentile","Fraction"), col = c("black","orange","darkgrey"), 
+  legend(60,0.2, legend = c("Quantile","Percentile","Fraction"), col = c("black","orange","darkgrey"), 
          lty = 1, bty = "n", y.intersp = 0.8, x.intersp = 0.3)
 }
 
 
-
+}
 

@@ -89,7 +89,10 @@ plt_cor_lag_siyu <- function(recor,lag){
   par(mfrow = c(1,3))
   par(oma = c(2,2.5,1,1), mar = c(2,2,1,1))
   
+  vegname = c("ndvi","evi","lai")
+  percname = c("perc_t1c0f1","perc_t0c0f0","perc_t1c1f1")
   color = c("black",colorname)
+  
   for( vegi in 1:length(vegname)){
     re = repp = NULL
     for( lagi in 1:length(lag) ){

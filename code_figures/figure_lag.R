@@ -14,5 +14,5 @@ flname = "f001"
 
 source("calc_daily_percmean.R")
 recor = calc_cor_percmean(data, flname)
-lag = 1:length(recor)
+lag = 1:length(recor$cor)
 plt_cor_lag_siyu(recor,lag)

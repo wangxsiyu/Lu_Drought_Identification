@@ -24,7 +24,7 @@ get_residual <- function(x){
   datacol = setdiff(names(x),ymd)
   re = NULL
   for( fli in 1:length(datacol)){
-    tav = calc_annualaverage(doy,x[,datacol[fli]])
+    tav = calc_residual(doy,x[,datacol[fli]])
     re = cbind(re,tav)
   }
   re = cbind(x[,ymd],re)
@@ -32,7 +32,7 @@ get_residual <- function(x){
   return(re)
 }
 
-calc_annualaverage <- function(doy,td){
+calc_residual <- function(doy,td){
   per_mean = NULL
   day365 = max(365, max(doy))
   # take mean
@@ -51,3 +51,4 @@ calc_annualaverage <- function(doy,td){
   }
   return(td)
 }
+

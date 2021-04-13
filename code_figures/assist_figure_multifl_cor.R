@@ -92,7 +92,7 @@ plt_multi_fl <- function(func, data, flname, isres=0, isperc=1){
   plt_lineplt_compare(vegname, percname, flname, veg_obs)
   
 #### pie plot
-  perc_percent = plt_pieplt_compare(veg_obs,vegname)
+  perc_percent = get_pieplt_compare(veg_obs,vegname)
   
   return(perc_percent)
 }

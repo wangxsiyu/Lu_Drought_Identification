@@ -14,26 +14,27 @@ modis_preprocess <- function(obs_d,veg){
 }
 
 doy2mon_day <- function(year, doy){
-  if( mod(year,4) == 0){
-    option29 = 1
-  }else{
-    option29 = 0
+  monday = NULL
+  for( i in 1:length(year) ){
+    if( year[i]%%4 == 0){
+      option29 = 1
+    }else{
+      option29 = 0
+    }
+    ms = c(31,28 + option29,31,30,31,30,31,31,30,31,30)
+    ms = c(0, cumsum(ms),365+option29)
+    mon = which(ms >= doy[i])[1]-1
+    day = doy[i] - ms[mon]
+    mon_day = cbind(mon,day)
+    monday = rbind(monday,mon_day)
   }
-  ms = c(31,28 + option29,31,30,31,30,31,31,30,31,30)
-  ms = c(0, cumsum(ms),365+option29)
-  mon = day = doy
-  for( i in 1:length(doy)){
-    mon[i] = which(ms >= doy[i])[1]-1
-    day[i] = doy[i] - ms[mon[i]]
-  } 
-  mon_day = cbind(mon,day)
-  colnames(mon_day) = c("month","day")
-  return(mon_day)
+  colnames(monday) = c("month","day")
+  return(monday)
 }
 
 extend_veg_data <- function(obs,veg){
   #if(is.null(veg$doy)){
-    doy = get_dayid(veg$month,veg$day)
+    #doy = get_dayid(veg$month,veg$day)
   #}else{
   #  doy = veg$doy
   #}
@@ -43,14 +44,14 @@ extend_veg_data <- function(obs,veg){
   colnames(tna) = colnames(veg)
   out = NULL
   for( i in 1:nrow(obs) ){
-    idx_n = which(veg$year == obs$year[i] & doy == get_dayid(obs$month[i],obs$day[i]))
+    idx_n = which(veg$year == obs$year[i] & veg$month == obs$month[i] & veg$day == obs$day[i])
     if( length(idx_n) == 0 ){
       out = rbind(out,tna)
     }else{
       out = rbind(out,veg[idx_n,])
     }
   }
-  out = cbind(out,obs[,1:3])
+  out = cbind(out,obs[,c("year","month","day")])
   return(out)
 }
 

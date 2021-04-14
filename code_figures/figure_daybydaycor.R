@@ -9,7 +9,7 @@ data0 = data;
 ###################
 source('assist_figure_daybydaycor.R')
 source("assist_figure_fr0_doy.R")
-flname = "x9472050"
+flname = "x9471000"
 plt_dailycor(data,flname)
 
 
@@ -26,4 +26,4 @@ for (pi in 1:length(percname)){
 }
 flname = 'f001'
 plt_nacor(data, flname)
-plt_selectday_scatter(data,flname,170)
+plt_selectday_scatter(data,flname,100)

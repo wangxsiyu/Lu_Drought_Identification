@@ -90,7 +90,7 @@ plt_selectday_scatter <- function(data,flname,dayi,flname_veg = NULL){
   if (is.null(flname_veg)){
     flname_veg = flname
   }
-  id0 = data$obs[,flname] >= 0
+  id0 = data$obs[,flname] ==0
   percname = c("perc_t1c0f1","perc_t0c0f1","perc_t1c1f1")
   vegname = c("ndvi","evi","lai")
   daily_cor = matrix(list(),length(vegname),length(percname))

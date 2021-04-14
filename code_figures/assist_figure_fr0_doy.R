@@ -1,3 +1,4 @@
+source("calc_residue.R")
 get_doy_fr_0 <- function(td,flname){
   ndata = flname #setdiff(colnames(td),c("year","month","day"))
   doy = get_dayid(td$month,td$day)

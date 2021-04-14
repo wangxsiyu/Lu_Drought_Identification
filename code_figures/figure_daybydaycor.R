@@ -24,4 +24,6 @@ for (pi in 1:length(percname)){
    pn = percname[pi];
    data[[pn]][, flname] = getlag(data0[[pn]][, flname], lag)
 }
+flname = 'f001'
 plt_nacor(data, flname)
+plt_selectday_scatter(data,flname,170)

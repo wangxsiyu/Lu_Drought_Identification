@@ -26,7 +26,7 @@ get_perc_veg_cor <- function(data, flname, percname, flname_veg = NULL){
     for (j in 1:length(percname)){
       tperc = data[[percname[j]]][,flname]
       tveg = data[[vegname[i]]][, flname_veg]
-      daily_cor[i,j] = cor(tperc, tveg, use = "pairwise")
+      daily_cor[i,j] = cor(tperc, tveg, use = "pairwise", method = "spearman") ## 20210414
     }
   }
   colnames(daily_cor) = percname

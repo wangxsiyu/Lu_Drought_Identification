@@ -1,6 +1,7 @@
-datadir = "/Users/Mengtian/Mengtian_Project/drought_identification/data"
-funcdir = "/Users/Mengtian/Mengtian_Project/drought_identification/Lu_Drought_Identification"
+library(rstudioapi)
+funcdir = dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(funcdir)
+datadir = "../../data"
 source('loaddata.R')
 data = loaddata(datadir);
 ###################

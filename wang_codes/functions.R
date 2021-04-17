@@ -1,4 +1,28 @@
 library(pracma)
+calc_startday_annual <- function(td){
+   result = list()
+   annual= matrix(NA,1,365)
+   for( lagi in 1:365 ){
+      # print(sprintf('processing lag %d',lagi))
+      ttd = get_year_lag(td,lagi)
+      annual[lagi] = get_yearlycor(ttd$veg, ttd$perc, ttd$year)
+   }
+   result$startday_annual = annual
+   return(result)
+}
+get_year_lag <- function(td,lag){
+   td$doy = td$doy + lag
+   id = which(td$doy > 365)
+   td$doy[id] = td$doy[id] - 365
+   td$year[id] = td$year[id] + 1
+   return(td)
+}
+
+
+
+
+
+
 calc_drydays <- function(td){
    thres = linspace(0.05, 0.5, 10)  
    out = list(thres = thres)

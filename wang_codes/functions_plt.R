@@ -160,3 +160,16 @@ plt_dist0 <- function(result, param = NULL){
   ht2 = hist(result$cd, breaks = bks, plot = F)
   lines(ht2$mids[1:nbin], ht2$counts[1:nbin]/max(ht2$counts[1:nbin]), col = "gray")
 }
+
+plt_yrst <- function(result, params = NULL){
+  vegname = "ndvi"
+  vars = paste("vegperc", vegname, "perc", c("t1c0f1","t0c0f0","t1c1f1"), sep = "_")
+  nvar = length(vars)
+  for (vi in 1:nvar){
+    tr = result[[vars[vi]]]$startday_annual
+    tr = as.numeric(tr)
+    plot(tr, type = 'l', xlim = c(0.5, 365.5), ylim = c(-1,1), col = params$colorname[vi])
+    par(new = T)
+  }
+  par(new = F)
+}

@@ -49,7 +49,8 @@ out_0s = analyzebyflumes(flumes, calc_0s)
 plot_byflume(out_0s, plt_dist0)
 
 # yearly vs startdate
-
+out_yrst = analyzebyflumes_vegperc(flumes, calc_startday_annual)
+plot_byflume(out_yrst, plt_yrst)
 
 # dry days (threshold) vs yearly
 out_drydays = analyzebyflumes_vegperc(flumes, calc_drydays)

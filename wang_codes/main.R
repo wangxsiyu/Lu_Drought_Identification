@@ -4,7 +4,7 @@ funcdir = dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(funcdir)
 
 # load data
-datadir = "../../data/allflumes"
+datadir = "../../data/allflumes/nosmooth/"
 source("loaddata.R")
 data = loaddata(datadir);
 
@@ -22,6 +22,9 @@ fr = flume2data(out_fr, c("doy"))
 out_dailycor = analyzebyflumes_vegperc(flumes, calc_01cor)
 plot_byflume(out_dailycor, plt_dailycor)
 
+# yearly corr
+out_yearlycor = analyzebyflumes_vegperc(flumes, calc_yearlycor)
+
 # day by day corr
 out_daybydaycor = analyzebyflumes_vegperc(flumes, calc_daybydaycor)
 result_daybydaycor = flumevegperc2data(out_daybydaycor, c("doy"))
@@ -33,7 +36,7 @@ plot_byflume(out_daybydaycor, plt_daybydaycor, list(select = corv, ylm = ylm, al
 plot_byflume(out_daybydaycor, plt_daybydaycor, list(issort = T, select = corv, ylm = ylm,  alpha = alpha))
 
 # permutation test
-out_perm = analyzebyflumes_vegperc(flumes, calc_yearlycor)
+out_perm = analyzebyflumes_vegperc(flumes, calc_yearlycor_perm)
 result_permcor = flumevegperc2data(out_perm)
 plot_byflume(out_perm, plt_perm)
 
@@ -55,4 +58,8 @@ plot_byflume(out_yrst, plt_yrst)
 # dry days (threshold) vs yearly
 out_drydays = analyzebyflumes_vegperc(flumes, calc_drydays)
 plot_byflume(out_drydays, plt_dryday)
+
+# fraction of 0 in the last 20 years
+out_fr0s = analyzebyflumes(flumes, calc_fr0s)
+plot_byflume(out_fr0s, plt_fraction)
 

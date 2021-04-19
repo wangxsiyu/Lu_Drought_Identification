@@ -29,7 +29,7 @@ flume2data <- function(d, vartokeep = NULL){
       out1 = d[[flumes[1]]][, vartokeep]
     }
     for (fli in 1:length(flumes)){
-      out1 = cbind(out1, d[[flumes[fli]]][, varnames[vi]])
+      out1 = cbind(out1, d[[flumes[fli]]][[varnames[vi]]])
     }
     out1 = as.data.frame(out1)
     names(out1) = c(vartokeep,flumes)

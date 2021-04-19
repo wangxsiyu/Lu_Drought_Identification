@@ -87,7 +87,7 @@ calc_seasonlycor_daily <- function(td){
 }
 
 
-calc_yearlycor <- function(td){
+calc_yearlycor_perm <- function(td){
    out = list()
    yr = td$year
    doy = td$doy
@@ -106,6 +106,14 @@ calc_yearlycor <- function(td){
    }
    out$cor_perm_byday = cp
    return(out)
+}
+
+calc_yearlycor <- function(td){
+  out = list()
+  yr = td$year
+  doy = td$doy
+  out$cor_yearly = get_yearlycor(td$veg, td$perc, yr)
+  return(out)
 }
 
 scramble <- function(yr, doy){
@@ -173,6 +181,13 @@ calc_daybydaycor <- function(td){
 calc_fr <- function(td){
    fr = get_fr(td$doy, td$obs)
    return(fr)
+}
+
+calc_fr0s <- function(td){
+  id = which(!is.na(td$ndvi))
+  id = min(id) : max(id)
+  fr = get_fr(td$doy[id], td$obs[id])
+  return(fr)
 }
 
 get_fr <- function(doy, obs){

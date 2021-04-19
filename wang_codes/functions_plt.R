@@ -9,7 +9,8 @@ plot_byflume <- function(result, pltfunc, param = list()){
   par(oma = c(2,2,1,1), mar = c(2,2,1,1))
   flname_all = names(result)
   for( fli in 1:length(flname_all) ){
-      pltfunc(result[[flname_all[fli]]], param)
+    pltfunc(result[[flname_all[fli]]], param)
+    mtext(side = 3,line = 0.2, text = flname_all[fli] )
   }
 }
 
@@ -96,7 +97,8 @@ plt_perm <- function(result, param = NULL){
 plt_runoff <- function(result, params){
   doy = get_dayid(result$month, result$day)
   tab = transmat(doy, result$year, result$obs)
-  image(x=tab$x, y = tab$y, z = tab$z, xlab = "",ylab = "")
+  #image(x=tab$x, y = tab$y, z = tab$z, xlab = "",ylab = "")
+  plot(rowMeans(tab$z,na.rm = T), log = "y", type = "l")
 }
 
 
@@ -130,7 +132,8 @@ plt_dailycor <- function(result, params){
   ymax = matrix(NA, nvar, 1)
   for (vi in 1:nvar){
     tr = result[[vars[vi]]]
-    plot(c(tr$cor, tr$cor_0, tr$cor_non0), type = 'l', xlim = c(0.5, 3.5), ylim = c(-1,1), col = params$colorname[vi])
+    plot(c(tr$cor, tr$cor_0, tr$cor_non0), type = 'o', xlim = c(0.5, 3.5), ylim = c(-1,1), las = 1,
+         col = params$colorname[vi])
     par(new = T)
   }
   par(new = F)
@@ -172,4 +175,9 @@ plt_yrst <- function(result, params = NULL){
     par(new = T)
   }
   par(new = F)
+}
+
+
+plt_fraction <- function(result,params = NULL){
+  plot(x = result$doy, y = result$fr, type = 'l', las = 1)
 }
